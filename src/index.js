@@ -1,17 +1,44 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import AppHeader from  './AppHeader';
+//import AppFooter from  './AppFooter';
+import AppFooterFunctionalComponent from  './AppFooterFunctionalComponent';
+import AppContent from './AppContent';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.handlePostChange = this.handlePostChange.bind(this);
+    this.state = {posts: []};
+  }
+
+  handlePostChange(posts) {
+    this.setState({posts: posts});
+  }
+
+  render() {
+    const myProps = {
+      title: "My Cool App!",
+      subject: "My subject",
+      fav_color: "blue"
+    }
+
+    return (
+      <div className="app">
+          <AppHeader {...myProps} posts={this.state.posts} handlePostChange={this.handlePostChange}/>
+          <AppContent handlePostChange={this.handlePostChange} posts={this.state.posts}/>
+          {/*<AppFooter /> */}
+          <AppFooterFunctionalComponent myProperty={"Hello, world"}/> 
+      </div>
+    );
+  }
+}
+
+
+ReactDOM.render(<App />, document.getElementById('root'));
